@@ -1,0 +1,144 @@
+[
+   {
+      "label": "Select user",
+      "fields": [
+         {
+            "key": "textInput",
+            "templateOptions": {
+               "label": "Search for User",
+               "placeholder": "Voorbeeld: 'Thomas'"
+            },
+            "type": "input",
+            "summaryVisibility": "Show",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+         },
+         {
+            "key": "userSelector",
+            "templateOptions": {
+               "label": "Users",
+               "required": true,
+               "grid": {
+                  "columns": [
+                     {
+                        "headerName": "Display Name",
+                        "field": "displayName"
+                     },
+                     {
+                        "headerName": "User Principal Name",
+                        "field": "userPrincipalName"
+                     },
+                     {
+                        "headerName": "Account Enabled",
+                        "field": "accountEnabled"
+                     },
+                     {
+                        "headerName": "GUID",
+                        "field": "GUID"
+                     }
+                  ],
+                  "height": 300,
+                  "rowSelection": "single"
+               },
+               "dataSourceConfig": {
+                  "dataSourceGuid": "46bce3cd-6e6f-4ada-aa02-ab43eb2edfa3",
+                  "input": {
+                     "propertyInputs": [
+                        {
+                           "propertyName": "searchUser",
+                           "otherFieldValue": {
+                              "otherFieldKey": "textInput"
+                           }
+                        }
+                     ]
+                  }
+               },
+               "useDefault": false,
+               "searchPlaceHolder": "Search this data"
+            },
+            "type": "grid",
+            "summaryVisibility": "Show",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": true
+         }
+      ]
+   },
+   {
+      "label": "Group memberships",
+      "fields": [
+         {
+            "key": "DisplayName",
+            "templateOptions": {
+               "label": "Display name",
+               "useDataSource": false,
+               "readonly": true,
+               "useDependOn": true,
+               "dependOn": "userSelector",
+               "dependOnProperty": "displayName"
+            },
+            "type": "input",
+            "summaryVisibility": "Show",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+         },
+         {
+            "key": "UserPrincipalName",
+            "templateOptions": {
+               "label": "user Principal Name",
+               "readonly": true,
+               "useDependOn": true,
+               "dependOn": "userSelector",
+               "dependOnProperty": "userPrincipalName"
+            },
+            "type": "input",
+            "summaryVisibility": "Show",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+         },
+         {
+            "key": "GroupMemberships",
+            "templateOptions": {
+               "label": "Group memberships",
+               "required": false,
+               "filterable": true,
+               "useDataSource": true,
+               "dualList": {
+                  "options": [],
+                  "optionKeyProperty": "displayName",
+                  "optionDisplayProperty": "displayName"
+               },
+               "destinationDataSourceConfig": {
+                  "dataSourceGuid": "539415c8-0969-4b9b-96d0-9db3b97ad357",
+                  "input": {
+                     "propertyInputs": [
+                        {
+                           "propertyName": "UserPrincipalName",
+                           "otherFieldValue": {
+                              "otherFieldKey": "UserPrincipalName"
+                           }
+                        }
+                     ]
+                  }
+               },
+               "dataSourceConfig": {
+                  "dataSourceGuid": "f6f3f0aa-295c-459e-a490-ddb4086a2d11",
+                  "input": {
+                     "propertyInputs": []
+                  }
+               }
+            },
+            "type": "duallist",
+            "summaryVisibility": "Show",
+            "sourceDataSourceIdentifierSuffix": "source-datasource",
+            "destinationDataSourceIdentifierSuffix": "destination-datasource",
+            "requiresTemplateOptions": true,
+            "requiresKey": true,
+            "requiresDataSource": false
+         }
+      ]
+   }
+]
