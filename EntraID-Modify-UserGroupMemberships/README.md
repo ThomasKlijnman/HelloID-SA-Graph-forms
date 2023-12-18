@@ -2,7 +2,7 @@
 
 ## Scripts Checklist
 
-Below is a checklist of the scripts required for modifying group memberships in Entra ID:
+Below is a checklist of example scripts demonstrating how to modify group memberships in Entra ID using the Microsoft Graph API through HTTPS requests. These scripts illustrate that no specific PowerShell module or runtime is required.
 
 1. **DS1-GetAllUsersSelectedAttributes.ps1**
    - This script retrieves selected attributes for all users, which from there a single user can be selected.
