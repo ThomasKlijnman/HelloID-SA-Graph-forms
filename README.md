@@ -1,6 +1,6 @@
 # HelloID Service Automation Repository
 
-Welcome to the Service Automation Forms repository! This repository serves as a public hub for various use cases and examples of service automation forms leveraging the Microsoft Graph API without the need for specific PowerShell modules.
+Welcome to the HelloID Service Automation repository! This repository serves as a public hub for various use cases and examples of service automation forms leveraging the Microsoft Graph API without the need for specific PowerShell modules.
 
 ## About
 This repository contains a collection of service automation forms designed for different use cases. The forms showcase the uniformity the Microsoft Graph API directly through HTTPS requests, allowing for a more streamlined and accessible approach compared to using multiple and different PowerShell modules, which all require a different kind of authorization.
