@@ -26,7 +26,7 @@ Try{
   $EntraIDGroups = $EntraIDGroupsResponse.value
 
   while (![string]::IsNullOrEmpty($EntraIDGroupsResponse.'@odata.nextLink')) {
-    $azureADUsersResponse = Invoke-RestMethod -Uri $EntraIDGroupsResponse.'@odata.nextLink' -Method Get -Headers $authorization -Verbose:$false
+    $EntraIDGroupsResponse = Invoke-RestMethod -Uri $EntraIDGroupsResponse.'@odata.nextLink' -Method Get -Headers $authorization -Verbose:$false
     $EntraIDGroups += $EntraIDGroupsResponse.value
   }  
 
