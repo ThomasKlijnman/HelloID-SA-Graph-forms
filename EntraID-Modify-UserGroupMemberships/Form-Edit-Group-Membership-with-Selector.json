@@ -6,7 +6,7 @@
             "key": "textInput",
             "templateOptions": {
                "label": "Search for User",
-               "placeholder": "Voorbeeld: 'Thomas'"
+               "placeholder": "Example: 'Thomas'"
             },
             "type": "input",
             "summaryVisibility": "Show",
@@ -109,7 +109,9 @@
                "dualList": {
                   "options": [],
                   "optionKeyProperty": "displayName",
-                  "optionDisplayProperty": "displayName"
+                  "optionDisplayProperty": "displayName",
+                  "labelLeft": "All online groups",
+                  "labelRight": "All current memberships"
                },
                "destinationDataSourceConfig": {
                   "dataSourceGuid": "539415c8-0969-4b9b-96d0-9db3b97ad357",
