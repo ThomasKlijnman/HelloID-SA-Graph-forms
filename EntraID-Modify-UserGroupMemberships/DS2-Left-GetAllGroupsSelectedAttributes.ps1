@@ -1,3 +1,7 @@
+# Define the UserPrincipalName
+$UserPrincipalName = $datasource.UserPrincipalName
+$UserGUID = $datasource.GUID
+
 # Build the authorization header
 $tokenUrl = "https://login.microsoftonline.com/$GraphtenantID/oauth2/token"
 $body = @{
@@ -11,7 +15,7 @@ $body = @{
 $tokenResponse = Invoke-RestMethod -Method Post -Uri $tokenUrl -ContentType "application/x-www-form-urlencoded" -Body $body
 $accessToken = $tokenResponse.access_token
 
-# Function to invoke the Graph API with parameters
+# Define the function to invoke the Graph API
 function Invoke-GraphApi {
     param (
         [string]$ApiEndpoint,
@@ -20,10 +24,10 @@ function Invoke-GraphApi {
         [string]$Version = 'v1.0'
     )
 
-    # Set the base URL for the Graph API via version param. (For example; v1.0 or Beta)
+    # Set the base URL for the Graph API
     $baseUrl = "https://graph.microsoft.com/$Version"
 
-    # Fill the bearer token with the dynamically obtained access token
+    # Replace 'YOUR_ACCESS_TOKEN' with the dynamically obtained access token
     $authorization = @{
         'Authorization' = "Bearer $accessToken"
         'Content-Type' = 'application/json'
@@ -32,47 +36,37 @@ function Invoke-GraphApi {
     # Build the full URL
     $url = "$baseUrl$ApiEndpoint"
 
-    # Execute the API call based on the specified method
+    # Execute the HTTP call based on the specified method
     $response = Invoke-RestMethod -Uri $url -Headers $authorization -Method $Method -Body $Body -ContentType "application/json"
 
     # Return the response
     $response
 }
 
-# Define parameters for invoking the Graph API
-$InvokeParams = @{
-  ApiEndpoint = "/groups"
-  Method = "GET"
-  Body = $null
-}
-
-# Invoke the Graph API and get the response
-$EntraIDGroupsResponse = Invoke-GraphApi @InvokeParams
+# Define the endpoint for fetching user groups
+$userGroupsEndpoint = "/users/$UserGUID/memberOf/microsoft.graph.group?$select=displayName,id,onPremisesSyncEnabled"
+$UserGroupsResponse = Invoke-GraphApi -ApiEndpoint $userGroupsEndpoint
 
 # Initialize the group list
-$EntraIDGroups = $EntraIDGroupsResponse.value
-
-# Excluded group list
-$excludedGuids = @("%STRIPED%")
+$UserGroups = $UserGroupsResponse.value
 
 # Loop through the paginated results
-while (![string]::IsNullOrEmpty($EntraIDGroupsResponse.'@odata.nextLink')) {
-    $EntraIDGroupsResponse = Invoke-GraphApi -ApiEndpoint $EntraIDGroupsResponse.'@odata.nextLink'
-    $EntraIDGroups += $EntraIDGroupsResponse.value
+while (![string]::IsNullOrEmpty($UserGroupsResponse.'@odata.nextLink')) {
+    $UserGroupsResponse = Invoke-GraphApi -ApiEndpoint $UserGroupsResponse.'@odata.nextLink'
+    $UserGroups += $UserGroupsResponse.value
 }  
 
 # If there are groups, loop through each group and output its properties
-if($EntraIDGroupsResponse.count -gt 0){
-    foreach($group in $EntraIDGroups){
+if($UserGroupsResponse.count -gt 0){
+    foreach($group in $UserGroups){
         # Check if onPremisesSyncEnabled is false
-        if (-not $group.onPremisesSyncEnabled -and $excludedGuids -notcontains $group.id) {
+        if (-not $group.onPremisesSyncEnabled){
             $returnObject = @{
                 displayName=$group.displayName;
-                description=$group.description;
-                createdDateTime=$group.createdDateTime;
-                GUID=$group.id;
+                id=$group.id;
             }
             Write-Output $returnObject
-         } 
+        }
     }
 }
+
