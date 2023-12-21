@@ -13,11 +13,8 @@ This repository contains a collection of service automation forms designed for d
 Feel free to explore the subfolders within this repository, each dedicated to a specific use case or service automation form. You can find detailed README files in each subfolder to guide you through the implementation and customization of the forms.
 
 ## Contribution
-Contributions to this repository are welcome! If you have additional use cases or improvements to existing forms, please open an issue or submit a pull request.
 
 ### Note: Public Accessibility and Disclaimer
 This repository is public and accessible to everyone. It serves as a public resource for those interested in leveraging the Microsoft Graph API for HelloID service automation, offering insights and examples for various scenarios.
 
 **Disclaimer:** The scripts provided in this repository are not designed to work "as is" due to the intentional exclusion of specific data such as authentication details (e.g., app registrations, client secrets). These details have been stripped for security reasons. In practice, authentication data should be managed and retrieved from a variable vault. Additionally, the scripts may be tailored to specific lab environments and might require customization for use in different contexts.
-
-**Contributions and Customization:** Contributions to this repository are welcome! If you have additional use cases or improvements to existing forms, please open an issue or submit a pull request. Keep in mind that you may need to customize the scripts to suit your specific environment.
